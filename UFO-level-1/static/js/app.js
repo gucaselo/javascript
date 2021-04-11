@@ -6,28 +6,47 @@ var tableData = data;
 var button = d3.select('#filter-btn')
 var form = d3.select('form')
 
-// User date input
-var inputData = d3.select('#datetime').property('value')
 
-button.on('click', function() {
-    var inputData = d3.select('#datetime').property('value')
-    console.log(inputData);
-})
+// var inputData = d3.select('#datetime').property('value')
 
-form.on('submit', function() {
-    var inputData = d3.select('#datetime').property('value')
-    d3.event.preventDefault();
-    var result = tableData.filter(date => date.datetime === inputData)
-    var tbody = d3.select('tbody')
-    result.forEach(value => {
-        var rows = tbody.append('tr')
-        Object.entries(value).forEach(([key, value]) => {
-            var data = rows.append('td');
-            data.text(value);
-        })
+// button.on('click', function() {
+//     var inputData = d3.select('#datetime').property('value')
+//     console.log(inputData);
+// })
+
+button.on('click',updateTable);
+form.on('submit', updateTable);
+// form.on('submit', function() {
+//     var inputData = d3.select('#datetime').property('value')
+//     d3.event.preventDefault();
+//     var result = tableData.filter(date => date.datetime === inputData)
+//     var tbody = d3.select('tbody')
+//     result.forEach(value => {
+//         var rows = tbody.append('tr')
+//         Object.entries(value).forEach(([key, value]) => {
+//             var data = rows.append('td');
+//             data.text(value);
+//         })
             
-    })
-    // tbody.append('tr').append('td')
+//     })
+    function updateTable() {
 
-    console.log(result);
-})
+        // User date input
+        var inputData = d3.select('#datetime').property('value')
+        
+        d3.event.preventDefault();
+        
+        var result = tableData.filter(date => date.datetime === inputData)
+        
+        var tbody = d3.select('tbody')
+        
+        result.forEach(value => {
+            var rows = tbody.append('tr')
+            Object.entries(value).forEach(([key, value]) => {
+                var data = rows.append('td');
+                data.text(value);
+        })
+        d3.select('#datetime').property('value', "")
+    })
+
+}
