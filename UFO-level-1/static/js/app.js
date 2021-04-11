@@ -28,28 +28,40 @@ function updateTable() {
     tbody.html('');
     
     // Append data filteres into the table
-    result.forEach(value => {
-        var rows = tbody.append('tr')
-        Object.entries(value).forEach(([key, value]) => {
-            var data = rows.append('td');
-            data.text(value);
-    })
-
+    if (result.length !== 0) {
+        result.forEach(value => {
+            var rows = tbody.append('tr')
+            Object.entries(value).forEach(([key, value]) => {
+                var data = rows.append('td');
+                data.text(value);
+            }) 
+        })
+    }
+    else {
+        tbody.append('tr')
+        .append('td')
+        .attr('colspan', '7')
+        .text(dateRange())
+        .style('text-align', 'center');
+        // console.log(dateRange())
+    }
     // Empty form after table is generated with filtered data
     d3.select('#datetime').property('value', "");
-    })
+    // })
 
 }
 
-// Function to return date range from the dataset
-function dateRange (data) {
-    var dates = data.map(info => info.datetime)
+// // Function to return date range from the dataset
+function dateRange() {
+
+    var dates = tableData.map(info => info.datetime)
     dates.sort(function (first, last) {
         return first - last;
     });
     var startDate = dates[0]; 
     var endDate = dates[dates.length-1];
-    console.log(`Date range is from (${startDate}) to (${endDate})`)
-}
+    output = `No UFO records found; dates are from (${startDate}) to (${endDate})`
 
-dateRange(tableData);
+    return output
+
+}
