@@ -5,6 +5,9 @@ var tableData = data;
 var button = d3.select('#filter-btn')
 var form = d3.select('form')
 
+// Load table on windows load
+d3.select(window).on('load', renderTable)
+
 // Event handlers based on clicks or hitting enter
 button.on('click',updateTable);
 form.on('submit', updateTable);
@@ -102,4 +105,26 @@ function advancedSearch() {
     //     }
     // }
     return result
+}
+
+// Function to rendle table on page load
+function renderTable() {
+
+    // Prevent default behavior 
+    d3.event.preventDefault();
+
+    // Select table body tag
+    var tbody = d3.select('tbody');
+
+     // Clear previous results
+     tbody.html('');
+
+     tableData.forEach(value => {
+        var rows = tbody.append('tr')
+        Object.entries(value).forEach(([key, value]) => {
+            var data = rows.append('td');
+            data.text(value);
+        }) 
+    })
+
 }

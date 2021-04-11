@@ -1,6 +1,9 @@
 // from data.js
 var tableData = data;
 
+// Load table on windows load
+d3.select(window).on('load', renderTable)
+
 // Select button "Filter Table" and "Submit" event
 var button = d3.select('#filter-btn')
 var form = d3.select('form')
@@ -61,4 +64,26 @@ function dateRange() {
     output = `No UFO records found; dates are from (${startDate}) to (${endDate})`
 
     return output
+}
+
+// Function to rendle table on page load
+function renderTable() {
+
+    // Prevent default behavior 
+    d3.event.preventDefault();
+
+    // Select table body tag
+    var tbody = d3.select('tbody');
+
+     // Clear previous results
+     tbody.html('');
+
+     tableData.forEach(value => {
+        var rows = tbody.append('tr')
+        Object.entries(value).forEach(([key, value]) => {
+            var data = rows.append('td');
+            data.text(value);
+        }) 
+    })
+
 }
