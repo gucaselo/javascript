@@ -27,7 +27,7 @@ function updateTable() {
     // Clear previous results
     tbody.html('');
     
-    // Append data filteres into the table
+    // Append data filtered into the table
     if (result.length !== 0) {
         result.forEach(value => {
             var rows = tbody.append('tr')
@@ -37,18 +37,16 @@ function updateTable() {
             }) 
         })
     }
+    // If array is empty due to out of range user input then insert a message
     else {
         tbody.append('tr')
         .append('td')
         .attr('colspan', '7')
         .text(dateRange())
         .style('text-align', 'center');
-        // console.log(dateRange())
     }
     // Empty form after table is generated with filtered data
     d3.select('#datetime').property('value', "");
-    // })
-
 }
 
 // // Function to return date range from the dataset
@@ -63,5 +61,4 @@ function dateRange() {
     output = `No UFO records found; dates are from (${startDate}) to (${endDate})`
 
     return output
-
 }
